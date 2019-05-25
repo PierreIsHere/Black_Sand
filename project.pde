@@ -9,11 +9,9 @@ void setup() {
 
 void draw() {
   background(#3f3f3f);
-   fill(120);
+  fill(120);
   square(400,300,30);
   t.keyPressed();
   t.update();
   t.show();
-  //t.rotate();
- 
 }
