@@ -8,6 +8,7 @@ class Tank {
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Bullet> shot = new ArrayList<Bullet>();
   boolean shoot = false;
+  
   Tank(int x, int y, int side) {
     loc = new PVector(x, y);
     this.side = side;
@@ -82,13 +83,15 @@ class Tank {
     if (keyPressed) {
       if      (keyCode == keyset[0])  vel--;
       else if (keyCode == keyset[1])  vel++;
-      else if (keyCode == keyset[2])  angle -= 5;
-      else if (keyCode == keyset[3])  angle += 5;
+      else if (keyCode == keyset[2])  angle -= 3.5;
+      else if (keyCode == keyset[3])  angle += 3.5;
+      else if     (key == keyset[4]) {
+        int t2 = millis();
+        if(t2-t1>100)  shoot = true;
+        t1 = t2;
+      }
     }
     vel = constrain(vel, -max, max); // limiting velocity to max
   }
 
-  void keyReleased(int k) {
-    if (key == k) shoot = true;
-  }
 }

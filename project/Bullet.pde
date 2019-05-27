@@ -1,7 +1,7 @@
 class Bullet {
   PVector loc;
   float angle;
-  float v = 20;
+  float v = 10;
   int r = 5;
   final float STRENGTH = 10;
   Bullet(float x, float y) {
@@ -12,7 +12,7 @@ class Bullet {
     
     loc.x -= cos(radians(angle))*v;  
     loc.y -= sin(radians(angle))*v;
-    v*=0.9999999;
+    
   }
   
   void setAngle(float angle){
