@@ -7,7 +7,7 @@ class Tank {
   int arsenal = 30;
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Bullet> shot = new ArrayList<Bullet>();
-  int shots = 0;
+  boolean shoot = false;
   Tank(int x, int y, int side) {
     loc = new PVector(x, y);
     this.side = side;
@@ -29,14 +29,23 @@ class Tank {
     loc.x = constrain(loc.x, 0, width); 
     loc.y = constrain(loc.y, 0, height);
 
-    for (int i=0; i<bullets.size()-shots; i++) {
+    for (int i=0; i<bullets.size(); i++) {
       bullets.get(i).reset(loc.x, loc.y);
     }
 
+    if (shoot) {
+      if (bullets.size()>0) {
+        bullets.get(bullets.size()-1).setAngle(angle);
+        shot.add( bullets.get(bullets.size()-1));
+        bullets.remove(bullets.size()-1);
+      }
+      shoot = false;
+    }
+
     for (int i=shot.size()-1; i>0; i--) {
-      shot.get(i).move(angle);
+      shot.get(i).move();
       shot.get(i).show();
-      //if (bullets.get(i).loc.x+bullets.get(i).r>width || bullets.get(i).loc.y+bullets.get(i).r>height || bullets.get(i).loc.x<bullets.get(i).r || bullets.get(i).loc.y<bullets.get(i).r) bullets.remove(i);
+      if (shot.get(i).loc.x+shot.get(i).r>width || shot.get(i).loc.y+shot.get(i).r>height || shot.get(i).loc.x<shot.get(i).r || shot.get(i).loc.y<shot.get(i).r) shot.remove(i);
     }
 
     //print(bullets.size()+" ");
@@ -72,17 +81,14 @@ class Tank {
     // updating velocity and angle based on key presses
     if (keyPressed) {
       if      (keyCode == keyset[0])  vel--;
-      if (keyCode == keyset[1])  vel++;
-      if (keyCode == keyset[2])  angle -= 5;
-      if (keyCode == keyset[3])  angle += 5;
-      if (key == keyset[4]) {
-        //print(shots+" ");
-        if (bullets.size()>0) {
-          shot.add(bullets.get(bullets.size()-1));
-          bullets.remove(bullets.size()-1);
-        }
-      }
+      else if (keyCode == keyset[1])  vel++;
+      else if (keyCode == keyset[2])  angle -= 5;
+      else if (keyCode == keyset[3])  angle += 5;
     }
     vel = constrain(vel, -max, max); // limiting velocity to max
+  }
+
+  void keyReleased(int k) {
+    if (key == k) shoot = true;
   }
 }

@@ -8,12 +8,16 @@ class Bullet {
     loc = new PVector(x, y);
   }
 
-  void move(float angle) {
-    this.angle = angle;
+  void move() {
+    
     loc.x -= cos(radians(angle))*v;  
     loc.y -= sin(radians(angle))*v;
+    v*=0.9999999;
   }
-
+  
+  void setAngle(float angle){
+    this.angle = angle;
+  }
   void reset(float x, float y) {
     loc.set(x, y);
   }
