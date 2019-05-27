@@ -5,7 +5,8 @@ class Tank {
   int side;
   float max = 7.5; // absolute maximum velocity
   int arsenal = 30;
-  ArrayList<Bullet> bullets = new ArrayList<Bullet>(30);
+  ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+  ArrayList<Bullet> shot = new ArrayList<Bullet>();
   int shots = 0;
   Tank(int x, int y, int side) {
     loc = new PVector(x, y);
@@ -32,13 +33,13 @@ class Tank {
       bullets.get(i).reset(loc.x, loc.y);
     }
 
-    for (int i=bullets.size()-shots>0?bullets.size()-shots:0; i<bullets.size(); i++) {
-      bullets.get(i).move(angle);
-      bullets.get(i).show();
+    for (int i=shot.size()-1; i>0; i--) {
+      shot.get(i).move(angle);
+      shot.get(i).show();
       //if (bullets.get(i).loc.x+bullets.get(i).r>width || bullets.get(i).loc.y+bullets.get(i).r>height || bullets.get(i).loc.x<bullets.get(i).r || bullets.get(i).loc.y<bullets.get(i).r) bullets.remove(i);
     }
 
-    print(bullets.size()+" ");
+    //print(bullets.size()+" ");
   }
 
   void show() {
@@ -75,8 +76,11 @@ class Tank {
       if (keyCode == keyset[2])  angle -= 5;
       if (keyCode == keyset[3])  angle += 5;
       if (key == keyset[4]) {
-        print(shots+" ");
-        shots++;
+        //print(shots+" ");
+        if (bullets.size()>0) {
+          shot.add(bullets.get(bullets.size()-1));
+          bullets.remove(bullets.size()-1);
+        }
       }
     }
     vel = constrain(vel, -max, max); // limiting velocity to max
