@@ -5,9 +5,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MultiThreadServer {
+    public static ArrayList<String> arr = new ArrayList<>();
     public static void main(String[] args) {
+
 
         ServerSocket server = null;
         try {
@@ -53,7 +56,8 @@ public class MultiThreadServer {
                 String line;
                 while ((line = in.readLine()) != null) {
                     System.out.printf("Sent from the client: %s\n", line);
-                    out.println(line);
+                    arr.add(line);
+                    out.println(arr);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
