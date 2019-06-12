@@ -1,13 +1,15 @@
 
 Tank t;
 Menu mainMenu;
+Menu characterMenu;
 Button back; 
 void setup() {
-  size(800, 600);
+  size(1200, 1000);
   surface.setResizable(true);
 
-  t = new Tank(width/2, height/2, 20);
+  t = new Tank(width/2, height/2, 75,"tanks/rTank4.png");
   mainMenu = new Menu(300,75,true,new String[]{"PLAY","CHARACTER","OPTIONS","EXIT"});
+  characterMenu = new Menu(100,100,false,new String[]{"","","",""});
   back = new Button(125, 40, 0, 20, "Main Menu");
 
   textFont(loadFont("SitkaSmall-48.vlw"));
@@ -39,6 +41,10 @@ void draw() {
     case 1:    
       game();
       break;
+    case 2:
+      characterMenu.update();
+      characterMenu.show();
+      menuSelection = characterMenu.getMenuType();
     
   }
 }

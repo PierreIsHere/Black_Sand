@@ -17,12 +17,10 @@ class Button{
   
   boolean mouseReleased(){
     
-    if(mouseX>=x-sizeX/2.0 && mouseX<=x+sizeX/2.0 && mouseY>=y-sizeY/2.0 && mouseY<=y+sizeY/2.0) {
-      
+    if(mouseX>=x-sizeX/2.0 && mouseX<=x+sizeX/2.0 && mouseY>=y-sizeY/2.0 && mouseY<=y+sizeY/2.0) {      
       this.clr = color(hue(#818181),saturation(#818181)-10,brightness(#818181)+10);
-      if(mousePressed){
+      if(mousePressed)       
         return true;
-      }
     }
     else  this.clr = #818181;
     return false;
@@ -36,16 +34,16 @@ class Button{
   int getMenuType(){
     return menuType;
   }
+  
   void show(){
     fill(clr);
     noStroke();
     rectMode(CENTER);
     rect(x,y,sizeX,sizeY,sizeY/5,sizeY/10,sizeY/5,sizeY/10);
+    
     textAlign(CENTER,CENTER);
-    fill(100,0,100);
-    
+    fill(100,0,100);    
     textSize(fontSize);
-    text(name,x,y);
-    
+    text(name,x,y);    
   }
 }

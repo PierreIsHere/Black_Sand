@@ -7,11 +7,12 @@ class Tank {
   int arsenal = 300;
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Bullet> shot = new ArrayList<Bullet>();
-
-  Tank(int x, int y, int side) {
+  PImage tank; 
+  Tank(int x, int y, int side,String tank) {
     loc = new PVector(x, y);
     this.side = side;
     for (int i=0; i<arsenal; i++) bullets.add(i, new Bullet(loc.x, loc.y));
+    this.tank = loadImage(tank);
   }
 
   void shoot() {
@@ -56,18 +57,22 @@ class Tank {
 
     // displaying the tank
     
-    rectMode(CENTER);
+    imageMode(CENTER);
     noStroke();
-    fill(100);    
-    rect(0, 0, side*1.5, side, 3);
+    fill(100);
+    tank.resize(side,0);
+    image(tank,0,0);
+    //copy(tank,0,0,tank.width,tank.height,0,0,side,side);
+    //copy(tank,50,50,100,100,0,0,50,50);
+    //rect(0, 0, side*1.5, side, 3);
 
     rotate(PI/2.0);// rotating the turret to face the same direction as the tank
 
-    //displaying the turret
-    strokeWeight(3);
-    stroke(0);
-    line(0, side, 0, 10);
-    noStroke();
+    ////displaying the turret
+    //strokeWeight(3);
+    //stroke(0);
+    //line(0, side, 0, 10);
+    //noStroke();
 
     popMatrix(); // deleting the tank from the new display grid and adding back to the original with translated and rotated co-ordinates
   }
