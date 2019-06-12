@@ -1,5 +1,5 @@
 class Button{
-  int x;
+  float x;
   float y;
   int sizeX;
   int sizeY;
@@ -17,7 +17,7 @@ class Button{
   
   boolean mouseReleased(){
     
-    if(mouseX>=x-sizeX/2 && mouseX<=x+sizeX/2 && mouseY>=y-sizeY/2 && mouseY<=y+sizeY/2) {
+    if(mouseX>=x-sizeX/2.0 && mouseX<=x+sizeX/2.0 && mouseY>=y-sizeY/2.0 && mouseY<=y+sizeY/2.0) {
       
       this.clr = color(hue(#818181),saturation(#818181)-10,brightness(#818181)+10);
       if(mousePressed){
@@ -28,7 +28,7 @@ class Button{
     return false;
   }
   
-  void setPos(int x, float y){
+  void setPos(float x, float y){
     this.x = x;
     this.y = y;
   }
