@@ -3,12 +3,11 @@ class Tank {
   float vel=0;
   int angle=90;
   int side;
-  float max = 7.5; // absolute maximum velocity
-  int arsenal = 30;
+  float max = 4; // absolute maximum velocity
+  int arsenal = 300;
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Bullet> shot = new ArrayList<Bullet>();
-  boolean shoot = false;
-  
+
   Tank(int x, int y, int side) {
     loc = new PVector(x, y);
     this.side = side;
@@ -34,19 +33,14 @@ class Tank {
       bullets.get(i).reset(loc.x, loc.y);
     }
 
-    if (shoot) {
-      if (bullets.size()>0) {
-        bullets.get(bullets.size()-1).setAngle(angle);
-        shot.add( bullets.get(bullets.size()-1));
-        bullets.remove(bullets.size()-1);
-      }
-      shoot = false;
-    }
-
     for (int i=shot.size()-1; i>0; i--) {
       shot.get(i).move();
       shot.get(i).show();
-      if (shot.get(i).loc.x+shot.get(i).r>width || shot.get(i).loc.y+shot.get(i).r>height || shot.get(i).loc.x<shot.get(i).r || shot.get(i).loc.y<shot.get(i).r) shot.remove(i);
+      if (shot.get(i).getLoc().x+shot.get(i).getRadius()>width  || 
+        shot.get(i).getLoc().y+shot.get(i).getRadius()>height || 
+        shot.get(i).getLoc().x<shot.get(i).getRadius()        || 
+        shot.get(i).getLoc().y<shot.get(i).getRadius()) 
+        shot.remove(i);
     }
 
     //print(bullets.size()+" ");
@@ -61,9 +55,10 @@ class Tank {
     rotate(radians(angle)); // rotating the tank on the origin of the new grid
 
     // displaying the tank
+    
     rectMode(CENTER);
     noStroke();
-    fill(255);    
+    fill(100);    
     rect(0, 0, side*1.5, side, 3);
 
     rotate(PI/2.0);// rotating the turret to face the same direction as the tank
@@ -85,13 +80,18 @@ class Tank {
       else if (keyCode == keyset[1])  vel++;
       else if (keyCode == keyset[2])  angle -= 3.5;
       else if (keyCode == keyset[3])  angle += 3.5;
-      else if     (key == keyset[4]) {
+      else if (key == keyset[4]) {
         int t2 = millis();
-        if(t2-t1>100)  shoot = true;
+        if (t2-t1>50) {
+          if (bullets.size()>0) {
+            bullets.get(bullets.size()-1).setAngle(angle);
+            shot.add( bullets.get(bullets.size()-1));
+            bullets.remove(bullets.size()-1);
+          }
+        }
         t1 = t2;
       }
     }
     vel = constrain(vel, -max, max); // limiting velocity to max
   }
-
 }

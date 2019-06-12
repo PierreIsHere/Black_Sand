@@ -2,7 +2,7 @@ class Bullet {
   PVector loc;
   float angle;
   float v = 10;
-  int r = 5;
+  float r = 5;
   final float STRENGTH = 10;
   Bullet(float x, float y) {
     loc = new PVector(x, y);
@@ -12,6 +12,7 @@ class Bullet {
     
     loc.x -= cos(radians(angle))*v;  
     loc.y -= sin(radians(angle))*v;
+    v*=0.999;
     
   }
   
@@ -21,6 +22,14 @@ class Bullet {
   void reset(float x, float y) {
     loc.set(x, y);
   }
+  
+  float getRadius(){
+    return r;
+  }
+  
+  PVector getLoc(){
+    return loc;
+  }
 
   void show() {
     pushMatrix();
@@ -28,7 +37,7 @@ class Bullet {
     translate(loc.x, loc.y);
     rotate(-radians(angle));
     noStroke();
-    fill(#EA2700);
+    fill(100);
     circle(0, 0, r);
 
     popMatrix();
