@@ -8,14 +8,15 @@ class Tank {
   ArrayList<Bullet> bullets = new ArrayList<Bullet>();
   ArrayList<Bullet> shot = new ArrayList<Bullet>();
   PImage tank; 
-  Tank(int x, int y, int side,String tank) {
+  Tank(int x, int y, int side) {
     loc = new PVector(x, y);
     this.side = side;
     for (int i=0; i<arsenal; i++) bullets.add(i, new Bullet(loc.x, loc.y));
-    this.tank = loadImage(tank);
+    //this.tank = loadImage("tanks/bTank1.png");
   }
 
-  void shoot() {
+  void setImage(String tank) {
+    this.tank = loadImage(tank);
   }
 
   void update() {
