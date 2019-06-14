@@ -3,9 +3,10 @@ import java.lang.*;
 public class Main {
 
     public static void main(String[] args) {
-    outputThread output = new outputThread();
-    inputThread input = new inputThread();
-    input.start();
-    output.start();
+        String ipAddr = "127.0.0.1";
+        outputThread output = new outputThread(ipAddr);
+        inputThread input = new inputThread(ipAddr);
+        input.start();
+        output.start();
     }
 }

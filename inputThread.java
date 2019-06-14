@@ -6,10 +6,14 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class inputThread extends Thread{
+    String ipAddress ;
+    public inputThread(String ipAddr){
+        ipAddress = ipAddr;
+    }
     @Override
     public void run() {
 
-        String host = "127.0.0.1";
+        String host = ipAddress;
         int port = 32000;
         try (Socket socket = new Socket(host, port)) {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);

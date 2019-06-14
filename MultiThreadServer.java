@@ -9,23 +9,15 @@ import java.util.ArrayList;
 
 public class MultiThreadServer {
     public static ArrayList<PrintWriter> clients = new ArrayList<>();
-
     public static void main(String[] args) {
-
-
         ServerSocket server = null;
         try {
             server = new ServerSocket(32000);
             server.setReuseAddress(true);
-            // The main thread is just accepting new connections
             while (true) {
                 Socket client = server.accept();
                 System.out.println("New client connected " + client.getInetAddress().getHostAddress());
                 ClientHandler clientSock = new ClientHandler(client);
-//                clients.add(clientSock.getClient());
-//                clients.add(clientSock.getClient());
-                System.out.print(clients);
-                // The background thread will handle each client separately
                 new Thread(clientSock).start();
             }
         } catch (IOException e) {
@@ -50,11 +42,6 @@ public class MultiThreadServer {
 
         }
 
-        public PrintWriter getClient(){
-
-            return out;
-        }
-
         @Override
         public void run() {
             BufferedReader in = null;
@@ -65,12 +52,11 @@ public class MultiThreadServer {
                 }
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String line;
-                while ((line = in.readLine()) != null) {
+                while ((line = in.readLine()) != null){
                     int noRec = clients.indexOf(out);
-                    System.out.println(noRec);
                     for(int i = 0; i < clients.size(); i++){
                         if(i != (noRec+1)){
-                            System.out.println("Sent to:"+ i +"-----"+ out+"------"+(noRec+1));
+                            System.out.println("Sent to:"+ i +"-----"+out+"------"+clients.get(i));
                             clients.get(i).println(line);
                         }
                     }
