@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class MultiThreadServer {
     public static ArrayList<String> arr = new ArrayList<>();
+    public static ArrayList<PrintWriter> clients = new ArrayList<>();
+
     public static void main(String[] args) {
 
 
@@ -21,7 +23,11 @@ public class MultiThreadServer {
                 Socket client = server.accept();
                 System.out.println("New client connected " + client.getInetAddress().getHostAddress());
                 ClientHandler clientSock = new ClientHandler(client);
-
+//                clients.add(clientSock.getClient());
+                Socket tempClient = clientSock.getClient();
+                PrintWriter out = new PrintWriter(tempClient.getOutputStream(), true);
+                clients.add(out);
+                System.out.print(clients);
                 // The background thread will handle each client separately
                 new Thread(clientSock).start();
             }
@@ -46,6 +52,10 @@ public class MultiThreadServer {
             this.clientSocket = socket;
         }
 
+        public Socket getClient(){
+            return clientSocket;
+        }
+
         @Override
         public void run() {
             PrintWriter out = null;
@@ -54,10 +64,21 @@ public class MultiThreadServer {
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 String line;
-                while ((line = in.readLine()) != null) {
-                    System.out.printf("Sent from the client: %s\n", line);
-                    arr.add(line);
-                    out.println(arr);
+//                while ((line = in.readLine()) != null) {
+//                    System.out.printf("Sent from the client:"+line);
+//                    arr.add(line);
+//                    clients.get(0).println("asdasd");
+////                    out.println(arr);
+////                    System.out.print(out);
+//                }
+                while (true) {
+//                    System.out.printf("Sent from the client:"+line);
+//                    arr.add(line);
+                    for(PrintWriter cli : clients){
+                        cli.println("test");
+                    }
+//                    out.println(arr);
+//                    System.out.print(out);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

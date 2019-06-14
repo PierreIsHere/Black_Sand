@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class ClientClone {
 
     public static void main(String[] args) {
 
@@ -17,13 +17,14 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Scanner scanner = new Scanner(System.in);
             String line = null;
-            while (true) {
-//                line = scanner.nextLine();
-//                out.println(line);
-//                out.flush();
+            while (!"exit".equalsIgnoreCase(line)) {
+                line = scanner.nextLine();
+                out.println(line);
+                out.flush();
+
                 System.out.println("Server replied " + in.readLine());
             }
-//            scanner.close();
+            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
