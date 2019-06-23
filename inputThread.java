@@ -25,7 +25,8 @@ public class inputThread extends Thread{
 
             System.out.println(path + "\\src\\com\\company\\keyLogger\\input.txt");
             path = path + "\\src\\com\\company\\keyLogger\\input.txt";
-
+            PrintWriter pw = new PrintWriter(path);
+            pw.close();
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
             while (true) {
