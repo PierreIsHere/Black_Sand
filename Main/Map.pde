@@ -65,7 +65,7 @@ class Map {
     strokeWeight(2);
     for (int x = grid.length/2; x<grid.length-1; x++) {
       for (int y = 0; y<grid[0].length-1; y++) {
-        if (grid[0].length-y>3 || grid.length-x>3 || x!=y || y<3 || x>grid.length/2+2) {
+        if (grid[0].length-y>3 || grid.length-x>3) {
           noFill();
           rectMode(CORNER);
           square(x*TILESIZE,y*TILESIZE,TILESIZE);
