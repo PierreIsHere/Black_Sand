@@ -11,23 +11,31 @@ class Tank {
   int health = 100;
   PImage tank;
   float r;
+  boolean iSelect = true;
   Tank(int x, int y, int side) {
     loc = new PVector(x, y);
     this.side = side;
-    for (int i=0; i<arsenal; i++) bullets.add(i, new Bullet(loc.x, loc.y));
+    for (int i=0; i<arsenal; i++) bullets.add(i, new Bullet(loc.x, loc.y, "bullet.png"));
     this.tank = loadImage("tanks/bTank1.png");
     this.tank.resize(side, 0);
     r = sqrt(side*side+this.tank.getModifiedY2()*this.tank.getModifiedY2())*0.5-5;
   }
   void reset() {
+    this.health = 100;
     bullets.clear();
     shot.clear();
-    for (int i=0; i<arsenal/2; i++) bullets.add(i, new Bullet(loc.x, loc.y));
+    if (shotPower == 2)
+
+      for (int i=0; i<arsenal/2; i++) bullets.add(i, new Bullet(loc.x, loc.y, "bullet2.png"));
+    else
+      for (int i=0; i<arsenal; i++) bullets.add(i, new Bullet(loc.x, loc.y, "bullet.png"));
   }
 
   void setImage(String tank) {
     if (tank.equals("tanks/bTank4.png")|| tank.equals("tanks/rTank4.png"))
       shotPower = 2;
+    else 
+    shotPower = 1;
     this.tank = loadImage(tank);
     this.tank.resize(side, 0);
   }
@@ -48,8 +56,7 @@ class Tank {
 
     for (int i=0; i<bullets.size(); i++) {
       bullets.get(i).reset(loc.x, loc.y);
-      if (shotPower==2) 
-        bullets.get(i).setImage();
+
 
       //bullets.get(i).reset(loc.x-10, loc.y);
     }
@@ -128,19 +135,37 @@ class Tank {
 
     // updating velocity and angle based on key presses
     if (keyPressed) {
+      
+      c.write(key+" ");
       if (key == CODED) {
         if      (keyCode == keyset[0])  vel--;
         else if (keyCode == keyset[1])  vel++;
         else if (keyCode == keyset[2])  angle -= 2;
         else if (keyCode == keyset[3])  angle += 2;
-      }
-      if      (key == keyset[0])  vel--;
-      else if (key == keyset[1])  vel++;
-      else if (key == keyset[2])  angle -= 2;
-      else if (key == keyset[3])  angle += 2;
-      else if (key == keyset[4]) {
+      } else if (key == keyset[4]) {
         int t2 = millis();
         if (t2-t1>50) {
+          if (bullets.size()>0) {
+
+            bullets.get(bullets.size()-1).setAngle(angle);
+            shot.add( bullets.get(bullets.size()-1));
+            bullets.remove(bullets.size()-1);
+          }
+        }
+        t1 = t2;
+      }
+    }
+    vel = constrain(vel, -max, max); // limiting velocity to max
+  }
+
+  void webKey(int k) {
+    if      (k == 'w')  vel--;
+    else if (k == 's')  vel++;
+    else if (k == 'a')  angle -= 2;
+    else if (k == 'd')  angle += 2;
+    else if (k == 'x')  {
+    int t2 = millis();
+        if (t2-t3>50) {
           if (bullets.size()>0) {
 
             bullets.get(bullets.size()-1).setAngle(angle);
@@ -149,9 +174,7 @@ class Tank {
             //println(tank.toString());
           }
         }
-        t1 = t2;
-      }
+        t3 = t2;
     }
-    vel = constrain(vel, -max, max); // limiting velocity to max
   }
 }
