@@ -1,12 +1,22 @@
 from pynput.keyboard import Key, Listener
-import os
 
 
 def on_press(key):
     file = open("input.txt", "a+")
     print(key)
-    # print(type(key))
-    file.write(key.char+"\n")
+
+    if key == Key.space:
+        file.write("space\n")
+    elif key == Key.up:
+        file.write("up\n")
+    elif key == Key.down:
+        file.write("down\n")
+    elif key == Key.right:
+        file.write("right\n")
+    elif key == Key.left:
+        file.write("left\n")
+    elif key != Key.enter and key != Key.tab and key != Key.backspace:
+        file.write(key.char+"\n")
 
 
 f = open('input.txt', 'r+')
