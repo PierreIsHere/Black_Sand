@@ -13,7 +13,7 @@ public class outputThread extends Thread{
     @Override
     public void run() {
         String host = ipAddress;
-        int port = 32000;
+        int port = 1720;
         try (Socket socket = new Socket(host, port)) {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             while (true) {

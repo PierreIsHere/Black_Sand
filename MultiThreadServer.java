@@ -12,7 +12,7 @@ public class MultiThreadServer {
     public static void main(String[] args) {
         ServerSocket server = null;
         try {
-            server = new ServerSocket(32000);
+            server = new ServerSocket(1720);
             server.setReuseAddress(true);
             while (true) {
                 Socket client = server.accept();
@@ -56,7 +56,7 @@ public class MultiThreadServer {
                     int noRec = clients.indexOf(out);
                     for(int i = 0; i < clients.size(); i++){
                         if(i != (noRec+1)){
-                            System.out.println("Sent to:"+ i +"-----"+out+"------"+clients.get(i));
+                            System.out.println("Sent"+line+" to:"+ i +"-----"+out+"------"+clients.get(i));
                             clients.get(i).println(line);
                         }
                     }
