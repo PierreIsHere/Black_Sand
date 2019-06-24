@@ -4,11 +4,12 @@ class Button {
   int sizeX;
   int sizeY;
   color clr;
-  int menuType;
   String name;
   int fontSize;
   PImage overlay;
   float zoom=1;
+  int  menuType;
+
   Button(int sizeX, int sizeY, int menuType, int fontSize, String name, String overlay) {
     this.sizeX = sizeX;
     this.sizeY = sizeY;
@@ -19,19 +20,19 @@ class Button {
       this.overlay = loadImage(overlay);
   }
 
-  boolean mouseReleased() {
-
-    if (mouseX>=x-sizeX/2.0 && mouseX<=x+sizeX/2.0 && mouseY>=y-sizeY/2.0 && mouseY<=y+sizeY/2.0) {       
-      this.clr = color(hue(#818181), saturation(#818181)-10, brightness(#818181)+10);      
-      this.zoom += 0.1;      
-      if (mousePressed)       
-        return true;
-    }
-    else{
-      this.clr = #818181;
-      this.zoom -= 0.1;
-    }
+  boolean mousePressed() {
+    if (rectOver() && mousePressed) return true;
     return false;
+  }
+  boolean rectOver() {
+    if (mouseX>=x-sizeX/2.0 && mouseX<=x+sizeX/2.0 && mouseY>=y-sizeY/2.0 && mouseY<=y+sizeY/2.0)
+
+      return true;
+    return false;
+  }
+
+  int getMenuType() {    
+    return this.menuType;
   }
 
   void setPos(float x, float y) {
@@ -39,11 +40,15 @@ class Button {
     this.y = y;
   }
 
-  int getMenuType() {
-    return menuType;
-  }
-
   void show() {
+    if (rectOver()) {
+      this.clr = color(hue(#818181), saturation(#818181)-10, brightness(#818181)+10);      
+      this.zoom += 0.1;
+    } else {
+      this.clr = #818181;
+      this.zoom -= 0.1;
+    }
+
     fill(clr);
     noStroke();
     rectMode(CENTER);
